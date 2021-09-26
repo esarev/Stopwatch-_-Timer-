@@ -15,6 +15,22 @@ startBtn.addEventListener('click', () => {
   interval = setInterval(startTimer, 10);
 });
 
+pauseBtn.addEventListener('click', () => {
+  clearInterval(interval);
+});
+
+stopBtn.addEventListener('click', () => {
+  clearInterval(interval);
+  hour = 00;
+  minute = 00;
+  second = 00;
+  millisecond = 00;
+  hourElements.textContent = '00';
+  minuteElements.textContent = '00';
+  secondElements.textContent = '00';
+  millisecondElements.textContent = '00';
+});
+
 // Variables
 let hour = 00,
     minute = 00,
@@ -25,7 +41,7 @@ let hour = 00,
 function startTimer() {
   millisecond++;
 
-  //Ms
+  //Msec
   if (millisecond < 9) {
     millisecondElements.innerText = '0' + millisecond;
   }
@@ -39,17 +55,40 @@ function startTimer() {
     millisecondElements.innerText = '0' + millisecond;
   }
 
-  //S
+  //Sec
   if (second < 9) {
     secondElements.innerText = '0' + second;
   }
   if (second > 9) {
     secondElements.innerText = second;
   }
-  if (second > 99) {
+  if (second > 59) {
     minute++;
     minuteElements.innerText = '0' + minute;
     second = 0;
     secondElements.innerText = '0' + second;
   }
+
+  //Min
+  if (minute < 9) {
+    minuteElements.innerText = '0' + minute;
+  }
+  if (minute > 9) {
+    minuteElements.innerText = minute;
+  }
+  if (minute > 59) {
+    hour++;
+    hourElements.innerText = '0' + hour;
+    minute = 0;
+    minuteElements.innerText = '0' + minute;
+  }
+
+  //Hours
+  if (hour < 9) {
+    hourElements.innerText = '0' + hour;
+  }
+  if (hour > 9) {
+    hourElements.innerText = hour;
+  }
+  
 }
