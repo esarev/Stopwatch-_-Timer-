@@ -7,7 +7,8 @@ const hourElements = document.querySelector('.hour'),
 // Buttons
 const startBtn = document.querySelector('.start'),
       pauseBtn = document.querySelector('.pause'),
-      stopBtn = document.querySelector('.stop');
+      stopBtn = document.querySelector('.stop'),
+      newBtn = document.querySelector('.new');
 
 //Listeners
 startBtn.addEventListener('click', () => {
@@ -21,14 +22,21 @@ pauseBtn.addEventListener('click', () => {
 
 stopBtn.addEventListener('click', () => {
   clearInterval(interval);
-  hour = 00;
-  minute = 00;
-  second = 00;
-  millisecond = 00;
-  hourElements.textContent = '00';
-  minuteElements.textContent = '00';
-  secondElements.textContent = '00';
-  millisecondElements.textContent = '00';
+  clearFields();
+  disableBtn();
+});
+
+newBtn.addEventListener('click', () => {
+  clearInterval(interval);
+  counter++;
+  const results = document.querySelector('.results'),
+        block = document.createElement('div');
+  block.classList.add('results__info');
+  block.innerText = `Result: ${counter}: ${hour}:${minute}:${second}:${millisecond}`;
+  results.append(block);
+  clearFields();
+  clearInterval(interval);
+  interval = setInterval(startTimer, 10);
 });
 
 // Variables
@@ -36,7 +44,9 @@ let hour = 00,
     minute = 00,
     second = 00,
     millisecond = 00,
-    interval;
+    interval,
+    counter = 0,
+    disabled = true;
 
 function startTimer() {
   millisecond++;
@@ -90,5 +100,26 @@ function startTimer() {
   if (hour > 9) {
     hourElements.innerText = hour;
   }
+
+  newBtn.disabled = false;
   
 }
+
+function clearFields() {
+  hour = 00;
+  minute = 00;
+  second = 00;
+  millisecond = 00;
+  hourElements.textContent = '00';
+  minuteElements.textContent = '00';
+  secondElements.textContent = '00';
+  millisecondElements.textContent = '00';
+}
+
+function disableBtn() {
+  if (disabled) {
+    newBtn.disabled = true;
+  }
+}
+
+disableBtn();
